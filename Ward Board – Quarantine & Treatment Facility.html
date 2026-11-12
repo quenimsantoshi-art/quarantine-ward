@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ward Board – Quarantine &amp; Treatment Facility</title>
+<style>
+:root{--bg:#f3f6f5;--surf:#fff;--ink:#14231f;--mut:#5b6b66;--line:#d7e0dd;--brand:#0f5c4d;--brandink:#fff;--ok:#127a46;--okbg:#dff3e6;--bad:#b3261e;--badbg:#fbe3e0;--warn:#8a5a00;--warnbg:#fdf0cf;--free:#e8eeec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0d1714;--surf:#15231f;--ink:#e6f0ec;--mut:#93a8a1;--line:#27403a;--brand:#4cc3a6;--brandink:#04211a;--ok:#5fd69a;--okbg:#14382a;--bad:#ff8f86;--badbg:#42191a;--warn:#f2c35b;--warnbg:#3b2e0e;--free:#1d2e29}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0d1714;--surf:#15231f;--ink:#e6f0ec;--mut:#93a8a1;--line:#27403a;--brand:#4cc3a6;--brandink:#04211a;--ok:#5fd69a;--okbg:#14382a;--bad:#ff8f86;--badbg:#42191a;--warn:#f2c35b;--warnbg:#3b2e0e;--free:#1d2e29}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--brand);color:var(--brandink);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:center;justify-content:space-between;padding:.75rem 1.25rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--brand);z-index:10}
+h1{font-size:1.15rem;margin:0;font-weight:700}
+h1 small{display:block;font-weight:400;opacity:.85;font-size:.8rem}
+.roles{display:flex;gap:.25rem;background:rgba(0,0,0,.18);padding:.25rem;border-radius:10px}
+.roles button{border:0;background:transparent;color:inherit;font:inherit;font-weight:600;padding:.45rem 1.1rem;border-radius:8px;cursor:pointer}
+.roles button[aria-pressed="true"]{background:var(--surf);color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+main{max-width:1100px;margin:0 auto;padding:1.25rem}
+h2{font-size:1.3rem;margin:0 0 .25rem}
+.sub{color:var(--mut);margin:0 0 1rem}
+.grid{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:1rem}
+.card.elig{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+.row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.sp{justify-content:space-between}
+.room{font-weight:700;font-size:1.05rem}
+.name{font-weight:600}
+.mut{color:var(--mut);font-size:.88rem}
+.badge{display:inline-block;padding:.15rem .6rem;border-radius:99px;font-size:.8rem;font-weight:700}
+.b-ok{background:var(--okbg);color:var(--ok)}.b-bad{background:var(--badbg);color:var(--bad)}.b-warn{background:var(--warnbg);color:var(--warn)}.b-free{background:var(--free);color:var(--mut)}
+.b-elig{background:var(--ok);color:#fff}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.5rem .65rem;width:100%}
+input.t{width:7.5rem}
+.btn{font:inherit;font-weight:600;border:1px solid var(--brand);background:var(--brand);color:var(--brandink);padding:.5rem .95rem;border-radius:8px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chips{display:flex;gap:.3rem;flex-wrap:wrap;margin:.5rem 0}
+.chip{font-size:.78rem;padding:.1rem .45rem;border-radius:6px;background:var(--free)}
+.chip.f{background:var(--badbg);color:var(--bad)}.chip.n{background:var(--okbg);color:var(--ok)}
+.kpis{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-bottom:1.25rem}
+.kpi .v{font-size:2.3rem;font-weight:800;line-height:1.1}
+.kpi.red .v{color:var(--bad)}.kpi.green .v{color:var(--ok)}.kpi.amber .v{color:var(--warn)}
+.bar{height:8px;background:var(--free);border-radius:9px;overflow:hidden;margin-top:.5rem}
+.bar i{display:block;height:100%;background:var(--brand)}
+.beds{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:.35rem;margin-top:.5rem}
+.bed{font-size:.75rem;text-align:center;padding:.4rem 0;border-radius:6px;background:var(--free);color:var(--mut)}
+.bed.o{background:var(--brand);color:var(--brandink)}.bed.a{background:var(--ok);color:#fff}
+.tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.two{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));margin-bottom:1.25rem}
+label{font-size:.85rem;font-weight:600;display:block;margin:.5rem 0 .2rem}
+.note{font-size:.85rem;border-left:3px solid var(--line);padding-left:.6rem;margin:.3rem 0}
+.empty{padding:1.5rem;text-align:center;color:var(--mut);border:1px dashed var(--line);border-radius:12px}
+#toast{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.65rem 1.1rem;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:20}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+.card.late{border-color:var(--bad);box-shadow:inset 4px 0 0 #e8710a}.banner{padding:.7rem 1rem;border-radius:10px;font-weight:600;margin-bottom:1rem}.banner.bad{background:var(--badbg);color:var(--bad)}.banner.warn{background:var(--warnbg);color:var(--warn)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ward Board<small>74-bed Virus Quarantine &amp; Treatment Facility</small></h1>
+  <div class="roles" role="group" aria-label="Switch role">
+    <button data-role="nurse">Nurse</button><button data-role="doctor">Doctor</button><button data-role="admin">Admin</button><button data-role="lock" title="Lock screen">Lock</button>
+  </div>
+</header>
+<main id="app"></main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const BEDS=74;
+const pad=n=>String(n).padStart(2,'0');
+const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const dayKey=o=>{const d=new Date();d.setDate(d.getDate()+o);return key(d)};
+const T=dayKey(0);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fever=t=>t>99.0;
+// name, age, room, prior daily temps (oldest first, ending yesterday), today's temp or null, visited today
+const seed=[
+['Aarav Mehta',34,3,[100.4,99.8,98.6,98.4],98.5,1],
+['Priya Nair',29,5,[99.9,99.2,98.8,98.6],98.7,0],
+['Rohan Desai',52,7,[101.2,100.6,100.1,99.7],99.4,0],
+['Sneha Kulkarni',41,8,[98.9,98.7,98.6],null,0],
+['Imran Shaikh',60,10,[102.1,101.4,100.8,100.2],100.0,1],
+['Kavita Joshi',37,12,[99.6,98.9,98.5,98.4],98.6,0],
+['Vikram Rao',45,14,[100.8,100.1,99.5],null,0],
+['Anjali Verma',26,15,[98.8,98.7],98.6,0],
+['Suresh Patil',67,17,[101.9,101.3,100.7,100.9],100.5,1],
+['Meera Iyer',31,19,[98.7,98.5,98.6],98.4,0],
+['Farhan Qureshi',23,21,[99.4,99.1],null,0],
+['Divya Menon',38,22,[100.2,99.6,99.1],99.3,0],
+['Harish Gupta',55,25,[101.0,100.4,99.8],null,0],
+['Neha Bhatt',33,28,[98.6,98.8,98.5,98.3],null,0],
+['Arjun Singh',48,30,[100.6,100.3,99.9],99.8,0],
+['Pooja Sawant',28,33,[99.0,98.7],98.8,0],
+['Dinesh Kamat',71,36,[102.4,101.8,101.5],101.2,1],
+['Lata Pillai',44,40,[98.9,98.8,98.7],98.6,1],
+['Zoya Khan',19,43,[99.7,99.3],null,0],
+['Manoj Yadav',58,47,[100.9,100.2,99.6],null,0],
+['Ritu Malhotra',36,52,[98.5,98.6],98.7,0],
+['Sanjay Thakur',63,58,[101.5,100.9,100.4],100.1,0]
+];
+let P=seed.map((s,i)=>{const temps={};s[3].forEach((t,j)=>temps[dayKey(-(s[3].length-j))]=t);if(s[4]!=null)temps[T]=s[4];
+ return{id:i+1,name:s[0],age:s[1],room:s[2],temps,status:'active',visited:s[5]?T:null,notes:[]}});
+let nextId=P.length+1;
+const closed={discharged:38,deceased:5}; // resolved cases before today's board
+let role=null,pending=null,pinErr='';const PINS={nurse:'1111',doctor:'2222',admin:'3333'}; // demo PINs
+let nurseFilter='all',drafts={},armed=null,hot=null,editing=null;
+const inBed=p=>p.status==='active'||p.status==='approved';
+const tt=p=>p.temps[T];
+const late=()=>new Date().getHours()>=16;
+const hhmm=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
+const hist=p=>{const ks=Object.keys(p.temps).sort().reverse();return ks.length?`<details style="margin-top:.5rem"><summary class="mut">Temperature history</summary>${ks.map(k=>`<div class="mut">${k}${p.times&&p.times[k]?' '+p.times[k]:''}: ${p.temps[k].toFixed(1)}°F${fever(p.temps[k])?' (fever)':''}</div>`).join('')}${(p.audit||[]).map(a=>`<div class="note">${a}</div>`).join('')}</details>`:''};
+const eligible=p=>{const d=Object.keys(p.temps).sort().slice(-3);if(d.length<3)return false;
+ for(let i=1;i<3;i++)if(Math.round((new Date(d[i]+'T00:00')-new Date(d[i-1]+'T00:00'))/864e5)!==1)return false;
+ return d.every(k=>!fever(p.temps[k]))};
+const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2600)};
+const chips=p=>{const ks=Object.keys(p.temps).sort().slice(-5);return ks.length?'<div class="chips" aria-label="Recent temperatures">'+ks.map(k=>`<span class="chip ${fever(p.temps[k])?'f':'n'}" title="${k}">${k.slice(5)}: ${p.temps[k].toFixed(1)}°F</span>`).join('')+'</div>':'<div class="mut">No readings yet</div>'};
+const tempBadge=p=>tt(p)==null?'<span class="badge b-warn">Pending</span>':'<span class="badge b-ok">Done</span>';
+const resBadge=t=>fever(t)?'<span class="badge b-bad">Fever</span>':'<span class="badge b-ok">No Fever</span>';
+
+function nurse(){
+ const list=P.filter(p=>p.status==='active').sort((a,b)=>a.room-b.room);
+ const pend=list.filter(p=>tt(p)==null).length;
+ const shown=list.filter(p=>nurseFilter==='all'||(nurseFilter==='pending')===(tt(p)==null));
+ return `<h2>Today’s temperatures</h2>${late()&&pend?`<div class="banner warn">${pend} patient(s) still pending after the 4:00 PM cutoff.</div>`:''}<p class="sub">${pend} pending, ${list.length-pend} done of ${list.length} patients. Enter readings in °F; 99.0°F or below is No Fever.</p>
+ <div class="tabs">${['all','pending','done'].map(f=>`<button class="btn ${nurseFilter===f?'':'ghost'}" data-act="filter" data-f="${f}">${f[0].toUpperCase()+f.slice(1)}</button>`).join('')}</div>
+ <div class="grid">${shown.map(p=>`<div class="card ${tt(p)==null&&late()?'late':''}"><div class="row sp"><span class="room">Room ${p.room}</span><span class="row">${tt(p)==null&&late()?'<span class="badge b-bad">Overdue</span>':''}${tempBadge(p)}</span></div>
+ <div class="name">${esc(p.name)} <span class="mut">· ${p.age} yrs</span></div>
+ ${tt(p)==null?`<div class="row" style="margin-top:.6rem"><input class="t" id="t${p.id}" type="number" inputmode="decimal" step="0.1" min="90" max="110" placeholder="°F" aria-label="Temperature in °F for room ${p.room}" value="${esc(drafts['t'+p.id]||'')}" data-draft="t${p.id}"><button class="btn" data-act="temp" data-id="${p.id}">Record</button></div>`:
+ `<div class="row" style="margin-top:.6rem"><strong style="font-size:1.4rem">${tt(p).toFixed(1)}°F</strong>${resBadge(tt(p))}<span class="badge b-free">Recorded ${p.times&&p.times[T]||''}</span><button class="btn ghost" data-act="edit" data-id="${p.id}">Correct</button></div>${editing===p.id?`<div class="row" style="margin-top:.5rem"><input class="t" id="e${p.id}" type="number" step="0.1" aria-label="Corrected temperature in °F"><button class="btn" data-act="fix" data-id="${p.id}">Save correction</button></div>`:''}`}${hist(p)}</div>`).join('')||'<div class="empty">No patients match this filter.</div>'}</div>`}
+
+function doctor(){
+ const list=P.filter(p=>p.status==='active'||p.status==='approved').sort((a,b)=>((tt(b)!=null)-(tt(a)!=null))||a.room-b.room);
+ return `<h2>Doctor rounds</h2><p class="sub">Patients with today’s temperature recorded appear first. Three consecutive fever-free days make a patient eligible for discharge.</p>
+ <div class="grid">${list.map(p=>{const el=eligible(p),ap=p.status==='approved',vis=p.visited===T;
+ return `<div class="card ${el?'elig':''}"><div class="row sp"><span class="room">Room ${p.room}</span><span class="row">${el?'<span class="badge b-elig">Eligible for Discharge</span>':''}${ap?'<span class="badge b-ok">Discharge approved</span>':''}${vis?'<span class="badge b-free">Visited</span>':''}</span></div>
+ <div class="name">${esc(p.name)} <span class="mut">· ${p.age} yrs</span></div>
+ <div class="row" style="margin-top:.3rem">${tempBadge(p)}${tt(p)!=null?`<strong>${tt(p).toFixed(1)}°F</strong>${resBadge(tt(p))}`:''}</div>${chips(p)}
+ ${p.notes.slice(-2).map(n=>`<div class="note"><span class="mut">${n.d}</span><br>${esc(n.t)}</div>`).join('')}
+ <label for="n${p.id}">Treatment notes</label><textarea id="n${p.id}" rows="2" data-draft="n${p.id}" placeholder="Add a note">${esc(drafts['n'+p.id]||'')}</textarea>
+ <div class="row" style="margin-top:.6rem"><button class="btn ghost" data-act="note" data-id="${p.id}">Save note</button><button class="btn ghost" data-act="visit" data-id="${p.id}" ${tt(p)==null&&!vis?'disabled title="Waiting for today’s temperature"':''}>${vis?'Undo visit':'Mark visited today'}</button></div>
+ <div class="row" style="margin-top:.5rem">${ap?'':`<button class="btn ok" data-act="approve" data-id="${p.id}" ${el?'':'disabled title="Needs 3 consecutive fever-free days"'}>Approve Discharge</button>`}
+ <button class="btn ${armed===p.id?'bad':'ghost'}" data-act="dead" data-id="${p.id}">${armed===p.id?'Confirm deceased':'Mark Deceased'}</button></div></div>`}).join('')||'<div class="empty">No patients in the facility.</div>'}</div>`}
+
+function admin(){
+ const occ=P.filter(inBed),n=occ.length,res=closed.discharged+closed.deceased;
+ const mort=res?closed.deceased/res*100:0,cure=res?closed.discharged/res*100:0;
+ const used=new Map(occ.map(p=>[p.room,p])),free=[];for(let r=1;r<=BEDS;r++)if(!used.has(r))free.push(r);
+ const ap=P.filter(p=>p.status==='approved').sort((a,b)=>a.room-b.room);
+ return `${mort>15?'<div class="banner bad">Mortality benchmark breached: above 15% of resolved cases.</div>':''}${free.length===0?'<div class="banner bad">Facility at full capacity — discharge a patient before admitting.</div>':''}<h2>Facility overview</h2><p class="sub">Total treated: ${res+n}. Rates are based on resolved cases (discharged or deceased).</p>
+ <div class="kpis">
+ <div class="card kpi ${n>=BEDS?'red':n/BEDS>.9?'amber':''}"><div class="mut">Bed occupancy</div><div class="v">${n} / ${BEDS}</div><div class="mut">${free.length} free · ${(n/BEDS*100).toFixed(0)}% full</div><div class="bar"><i style="width:${n/BEDS*100}%"></i></div></div>
+ <div class="card kpi ${mort>15?'red':''}"><div class="mut">Mortality rate</div><div class="v">${mort.toFixed(1)}%</div><div class="mut">${closed.deceased} of ${res} resolved · red above 15%</div></div>
+ <div class="card kpi ${cure>=85?'green':'amber'}"><div class="mut">Cure success rate</div><div class="v">${cure.toFixed(1)}%</div><div class="mut">${closed.discharged} of ${res} resolved · target 85% or more</div></div></div>
+ <div class="two"><div class="card"><h2 style="font-size:1.1rem">Admit new patient</h2>
+ <label for="an">Full name</label><input id="an" data-draft="an" value="${esc(drafts.an||'')}">
+ <label for="aa">Age</label><input id="aa" type="number" min="0" max="120" data-draft="aa" value="${esc(drafts.aa||'')}">
+ <label for="ar">Room</label><select id="ar" ${free.length?'':'disabled'}>${free.map(r=>`<option ${String(drafts.ar)===String(r)?'selected':''}>${r}</option>`).join('')||'<option>No free rooms</option>'}</select>
+ <div style="margin-top:.8rem"><button class="btn" data-act="admit" ${free.length?'':'disabled'}>Admit patient</button></div></div>
+ <div class="card"><h2 style="font-size:1.1rem">Approved discharges</h2>
+ ${ap.map(p=>`<div class="row sp" style="padding:.5rem 0;border-top:1px solid var(--line)"><span><strong>Room ${p.room}</strong> · ${esc(p.name)}</span><button class="btn ok" data-act="final" data-id="${p.id}">Finalize discharge</button></div>`).join('')||'<p class="mut">No doctor-approved discharges waiting.</p>'}</div></div>
+ <div class="card"><h2 style="font-size:1.1rem">Bed map</h2><div class="mut">Green: discharge approved · Teal: occupied · Grey: free</div>
+ <div class="beds">${Array.from({length:BEDS},(_,i)=>{const p=used.get(i+1);return `<div class="bed ${p?(p.status==='approved'?'a':'o'):''}" title="${p?esc(p.name):'Free'}">${i+1}</div>`}).join('')}</div></div>`}
+
+function lockScreen(){const nm={nurse:'Nurse',doctor:'Doctor',admin:'Admin'};
+ return `<div class="card" style="max-width:380px;margin:2rem auto"><h2>${pending?nm[pending]+' access':'Locked'}</h2>${pending?`<p class="sub">Enter the ${nm[pending]} PIN to continue.</p><label for="pin">PIN</label><input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off">${pinErr?`<p class="banner bad" style="margin:.6rem 0 0">${pinErr}</p>`:''}<div class="row" style="margin-top:.8rem"><button class="btn" data-act="unlock">Unlock</button><button class="btn ghost" data-act="pick" data-r="">Back</button></div>`:`<p class="sub">Choose a role. Each role needs its own PIN.</p><div class="row">${Object.keys(nm).map(r=>`<button class="btn" data-act="pick" data-r="${r}">${nm[r]}</button>`).join('')}</div>`}<p class="mut" style="margin-top:1rem">Demo PINs: Nurse 1111, Doctor 2222, Admin 3333</p></div>`}
+function render(){
+ document.querySelectorAll('.roles button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.role===role));
+ document.getElementById('app').innerHTML=role?{nurse,doctor,admin}[role]():lockScreen();
+ if(!role){const i=document.getElementById('pin');if(i)i.focus()}
+}
+const find=id=>P.find(p=>p.id===+id);
+document.querySelector('.roles').addEventListener('click',e=>{const r=e.target.dataset.role;if(!r)return;armed=null;editing=null;pinErr='';if(r==='lock'){role=null;pending=null}else if(r!==role){role=null;pending=r}render()});
+document.getElementById('app').addEventListener('input',e=>{const k=e.target.dataset.draft;if(k)drafts[k]=e.target.value;if(e.target.id==='ar')drafts.ar=e.target.value});
+document.getElementById('app').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName==='INPUT'){const c=e.target.closest('.card'),bt=c&&c.querySelector('[data-act=temp],[data-act=fix],[data-act=unlock]');if(bt){e.preventDefault();bt.click()}}});
+document.getElementById('app').addEventListener('click',e=>{
+ const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,p=b.dataset.id?find(b.dataset.id):null;
+ if(a==='pick'){pending=b.dataset.r||null;pinErr='';return render()}
+ if(a==='unlock'){const v=document.getElementById('pin').value;if(v===PINS[pending]){role=pending;pending=null;pinErr='';render();return toast('Signed in as '+role)}pinErr='Incorrect PIN. Try again.';return render()}
+ const need={filter:'nurse',temp:'nurse',edit:'nurse',fix:'nurse',visit:'doctor',note:'doctor',approve:'doctor',dead:'doctor',final:'admin',admit:'admin'}[a];
+ if(need&&need!==role)return toast('This action is not available to your role.');
+ if(a!=='dead')armed=null;
+ if(a==='filter'){nurseFilter=b.dataset.f}
+ else if(a==='temp'){const v=parseFloat(document.getElementById('t'+p.id).value);
+  if(tt(p)!=null)return toast('Room '+p.room+' already has today’s temperature.');
+  if(isNaN(v)||v<90||v>110)return toast('Enter a temperature between 90.0 and 110.0 °F.');
+  if(v>104&&hot!==p.id){hot=p.id;return toast('Unusually high ('+v.toFixed(1)+'°F). Press Record again to confirm.')}hot=null;p.temps[T]=Math.round(v*10)/10;(p.times=p.times||{})[T]=hhmm();delete drafts['t'+p.id];toast('Room '+p.room+': '+p.temps[T].toFixed(1)+'°F, '+(fever(v)?'Fever':'No Fever'))}
+ else if(a==='edit'){editing=p.id}
+ else if(a==='fix'){const v=parseFloat(document.getElementById('e'+p.id).value);if(isNaN(v)||v<90||v>110)return toast('Enter a temperature between 90.0 and 110.0 °F.');(p.audit=p.audit||[]).push(T+' '+hhmm()+': corrected '+tt(p).toFixed(1)+' to '+v.toFixed(1)+'°F');p.temps[T]=Math.round(v*10)/10;editing=null;toast('Correction saved and logged')}
+ else if(a==='visit'){if(tt(p)==null&&p.visited!==T)return toast('Record today’s temperature before marking a visit.');p.visited=p.visited===T?null:T}
+ else if(a==='note'){const t=(drafts['n'+p.id]||'').trim();if(!t)return toast('Write a note before saving.');p.notes.push({d:T,t});delete drafts['n'+p.id];toast('Note saved for room '+p.room)}
+ else if(a==='approve'){if(!eligible(p))return;p.status='approved';toast('Discharge approved for room '+p.room+'. Admin notified.')}
+ else if(a==='dead'){if(armed!==p.id){armed=p.id;render();return toast('Press again to confirm deceased.')}
+  p.status='deceased';closed.deceased++;armed=null;toast('Room '+p.room+' marked deceased and bed freed')}
+ else if(a==='final'){p.status='discharged';closed.discharged++;toast('Room '+p.room+' discharged and bed freed')}
+ else if(a==='admit'){const name=(drafts.an||'').trim(),age=+drafts.aa,room=+(document.getElementById('ar').value);
+  if(!name)return toast('Enter the patient’s name.');if(!(age>=0&&age<=120)||drafts.aa==null||drafts.aa==='')return toast('Enter a valid age.');
+  if(P.some(x=>inBed(x)&&x.room===room))return toast('Room '+room+' is taken.');
+  P.push({id:nextId++,name,age,room,temps:{},status:'active',visited:null,notes:[]});drafts={};toast(name+' admitted to room '+room)}
+ render();
+});
+render();
+</script>
+</body>
+</html>
